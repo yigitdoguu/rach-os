@@ -3,214 +3,215 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rach OS | Portal</title>
+    <title>Rach OS | Official Portal</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary: #58a6ff; 
-            --bg: #1c1f23;
-            --card-bg: rgba(33, 38, 45, 0.9);
-            --border: #444c56;
-            --text: #c9d1d9;
-            --neon: 0 0 20px rgba(88, 166, 255, 0.5);
+            /* Hyprland Paleti */
+            --primary: #89b4fa; /* Mavi/Cyan */
+            --accent: #cba6f7; /* Mor */
+            --bg: #11111b; /* Koyu Gri */
+            --text: #cdd6f4;
+            --glass: rgba(17, 17, 27, 0.6);
+            --border: rgba(137, 180, 250, 0.2);
+            --neon: 0 0 25px rgba(137, 180, 250, 0.5);
+            --neon-mor: 0 0 25px rgba(203, 166, 247, 0.5);
         }
 
         body, html {
             margin: 0; padding: 0;
             width: 100%; height: 100%;
-            font-family: 'Fira Code', monospace;
+            font-family: 'Inter', sans-serif; /* Hyprland gibi modern sans-serif */
             background-color: var(--bg);
             color: var(--text);
-            overflow: hidden; /* Giriş ekranında kaydırmayı engelle */
+            overflow-x: hidden;
+            background-image: radial-gradient(circle at center, #181825 0%, #11111b 100%);
         }
 
-        /* --- BAŞLANGIÇ EKRANI (BOOT SCREEN) --- */
-        #boot-screen {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: #05070a;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            transition: transform 0.8s cubic-bezier(0.85, 0, 0.15, 1);
+        /* --- MODERN GİRİŞ SAYFASI (Giriş) --- */
+        #gilis-sayfasi {
+            display: flex; flex-direction: column; height: 100vh;
         }
 
-        .welcome-led {
-            text-align: center;
-            border: 1px solid var(--primary);
-            padding: 50px 80px;
-            border-radius: 15px;
-            box-shadow: var(--neon);
-            background: rgba(88, 166, 255, 0.02);
-            margin-bottom: 40px;
-        }
-
-        #dynamic-text {
-            font-size: 3.5rem;
-            font-weight: 800;
-            color: var(--primary);
-            text-shadow: 0 0 10px var(--primary);
-            letter-spacing: 5px;
-            min-height: 80px;
-        }
-
-        .continue-btn {
-            background: transparent;
-            border: 2px solid var(--primary);
-            color: var(--primary);
-            padding: 15px 40px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            cursor: pointer;
+        /* Hyprland Tarzı Navigasyon */
+        nav {
+            position: absolute; top: 30px; left: 50%; transform: translateX(-50%);
+            width: 90%; max-width: 1300px;
+            padding: 15px 30px;
+            background: rgba(17, 17, 27, 0.8);
+            backdrop-filter: blur(15px);
             border-radius: 50px;
+            border: 1px solid var(--border);
+            display: flex; justify-content: center; align-items: center; gap: 30px;
+            z-index: 1000;
+        }
+
+        nav a {
+            color: #8b949e; text-decoration: none; font-size: 0.9rem; font-weight: 500;
+            text-transform: capitalize; transition: 0.3s;
+        }
+
+        nav a:hover { color: var(--primary); text-shadow: var(--neon); }
+
+        /* "Devam Et" Butonu - Hyprland INSTALL gibi */
+        .system-btn {
+            position: absolute; right: 30px; top: 18px; /* Nav içinde konumu */
+            background: var(--glass);
+            color: var(--primary);
+            padding: 12px 30px;
+            font-weight: 800;
+            border-radius: 50px;
+            border: 1px solid var(--border);
+            text-decoration: none;
+            cursor: pointer;
             transition: 0.3s;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
+            z-index: 1001;
+            font-size: 0.9rem;
         }
 
-        .continue-btn:hover {
+        .system-btn:hover {
             background: var(--primary);
             color: #05070a;
             box-shadow: var(--neon);
             transform: scale(1.05);
         }
 
-        /* --- ANA İÇERİK (SİTE) --- */
-        #main-content {
-            height: 100vh;
-            overflow-y: auto;
-            display: none; /* İlk başta gizli */
-            padding-top: 80px;
+        /* Giriş Başlığı */
+        .gilis-content {
+            flex: 1;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            text-align: center;
+            margin-top: 100px; /* Nav barın altından başla */
         }
 
-        nav {
-            position: fixed; top: 0; width: 100%;
-            background: rgba(22, 27, 34, 0.95);
-            border-bottom: 1px solid var(--border);
-            display: flex; justify-content: center; gap: 40px;
-            padding: 20px 0; z-index: 1000;
+        .gilis-title {
+            font-size: 6rem; font-weight: 800; letter-spacing: -3px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            margin: 0;
+            position: relative;
         }
 
-        nav a { color: #8b949e; text-decoration: none; font-weight: bold; }
-        nav a:hover { color: var(--primary); }
+        .gilis-title::after {
+            content: ''; position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%);
+            width: 60%; height: 5px;
+            background: var(--accent); border-radius: 50px;
+            filter: blur(5px); opacity: 0.5;
+        }
 
-        .container { max-width: 1100px; margin: 0 auto; padding: 40px; }
+        .gilis-tag { color: var(--text); font-size: 1.2rem; margin-top: 20px; opacity: 0.7; max-width: 600px; }
+
+        /* LED Dil Ekranı - Girişte soluk bir animasyon */
+        #led-ekran {
+            margin-top: 50px;
+            border: 1px solid var(--border);
+            padding: 20px 40px;
+            border-radius: 15px;
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            font-family: 'Fira Code', monospace;
+            color: var(--accent);
+            text-shadow: 0 0 10px var(--accent);
+            opacity: 0.5; /* Daha soluk */
+        }
+
+        /* --- ANA PORTAL (Tıklandıktan sonra) --- */
+        #main-portal { display: none; }
+
+        .iso-section { padding: 100px 50px; text-align: center; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; max-width: 1200px; margin: 0 auto; }
+        .card { background: var(--glass); border: 1px solid var(--border); padding: 30px; border-radius: 20px; transition: 0.3s; }
+        .card:hover { border-color: var(--primary); transform: translateY(-10px); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         
-        .iso-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px;
-        }
+        .download-btn { display: block; background: var(--primary); color: #05070a; padding: 15px; text-align: center; border-radius: 10px; text-decoration: none; margin-top: 25px; font-weight: 800; }
+        .download-btn:hover { box-shadow: var(--neon); }
 
-        .card {
-            background: var(--card-bg); border: 1px solid var(--border);
-            padding: 30px; border-radius: 15px; text-align: center; transition: 0.3s;
-        }
-        .card:hover { border-color: var(--primary); transform: translateY(-5px); }
-
-        .about-page {
-            display: none; /* Ayrı sayfa gibi çalışacak */
-            text-align: left; line-height: 1.6;
-        }
-
-        .download-btn {
-            display: block; margin-top: 20px; padding: 12px;
-            border: 1px solid var(--primary); color: var(--primary);
-            text-decoration: none; border-radius: 8px; font-weight: bold;
-        }
-        .download-btn:hover { background: var(--primary); color: #1c1f23; }
-
+        .about-section { background: var(--glass); border-top: 1px solid var(--border); padding: 100px 50px; text-align: left; }
     </style>
 </head>
 <body>
 
-    <div id="boot-screen">
-        <div class="welcome-led">
-            <div id="dynamic-text">RACH OS</div>
-            <div style="color: #444; margin-top: 10px; letter-spacing: 3px;">SYSTEM BOOT SEQUENCE</div>
-        </div>
-        <button class="continue-btn" onclick="startSystem()">Devam Et <i class="fas fa-chevron-right"></i></button>
-    </div>
+    <div id="gilis-sayfasi">
+        
+        <a href="javascript:void(0)" onclick="startSystem()" class="system-btn">SİSTEME GİR <i class="fas fa-chevron-right"></i></a>
 
-    <div id="main-content">
         <nav>
-            <a href="javascript:void(0)" onclick="showPage('downloads')">DOWNLOADS</a>
-            <a href="javascript:void(0)" onclick="showPage('about')">ABOUT RACH</a>
+            <a href="#welcome">Giriş</a>
+            <a href="javascript:void(0)" onclick="showPage('downloads')">Downloads</a>
+            <a href="javascript:void(0)" onclick="showPage('about')">About OS</a>
         </nav>
 
-        <div class="container">
-            <div id="downloads-page">
-                <h2 style="text-align: center; color: var(--primary); margin-bottom: 40px;">OFFICIAL ISO RELEASES</h2>
-                <div class="iso-grid">
-                    <div class="card">
-                        <i class="fas fa-microchip fa-3x" style="color: var(--primary); margin-bottom: 15px;"></i>
-                        <h3>Rach OS Standart</h3>
-                        <p>Stabil çekirdek ve temel araçlar.</p>
-                        <a href="#" class="download-btn">İndir (ISO)</a>
-                    </div>
-                    <div class="card">
-                        <i class="fas fa-desktop fa-3x" style="color: var(--primary); margin-bottom: 15px;"></i>
-                        <h3>Rach OS Live GUI</h3>
-                        <p>Grafik arayüzlü canlı deneme sürümü.</p>
-                        <a href="#" class="download-btn">İndir (ISO)</a>
-                    </div>
-                    <div class="card">
-                        <i class="fas fa-graduation-cap fa-3x" style="color: var(--primary); margin-bottom: 15px;"></i>
-                        <h3>Education Edition</h3>
-                        <p>Türkiye eğitim müfredatına uygun sürüm.</p>
-                        <a href="#" class="download-btn">İndir (ISO)</a>
-                    </div>
+        <div class="gilis-content">
+            <h1 class="gilis-title">RACH OS</h1>
+            <p class="gilis-tag">Modern compositing meets the looks. Built for performance, security and customization.</p>
+            
+            <div id="led-ekran">SYSTEM READY</div>
+        </div>
+
+    </div>
+
+    <div id="main-portal">
+        <div id="downloads-page" class="iso-section">
+            <h2 style="color: var(--primary);">OFFICIAL ISO RELEASE HUB</h2>
+            <p style="margin-bottom: 50px; opacity: 0.7;">Select your edition of Rach OS.</p>
+            <div class="grid">
+                <div class="card">
+                    <i class="fab fa-linux fa-3x" style="color: var(--accent);"></i>
+                    <h3>Rach OS Standart</h3>
+                    <p>Core kernel with basic command-line tools.</p>
+                    <a href="#" class="download-btn">DOWNLOAD (ISO)</a>
+                </div>
+                <div class="card">
+                    <i class="fas fa-desktop fa-3x" style="color: var(--primary);"></i>
+                    <h3>Rach OS Live GUI</h3>
+                    <p>Pre-configured desktop experience. Live test ready.</p>
+                    <a href="#" class="download-btn">TRY LIVE (ISO)</a>
                 </div>
             </div>
+        </div>
 
-            <div id="about-page" class="about-page">
-                <h2 style="color: var(--primary);">Hakkında: Rach OS Project</h2>
-                <p>Rach OS, 2026 yılında modern bilişim ihtiyaçlarına yanıt vermek amacıyla geliştirilmiş, bağımsız bir işletim sistemi projesidir. Hız, güvenlik ve özelleştirilebilirlik odaklıdır.</p>
-                <hr style="border: 0; border-top: 1px solid var(--border); margin: 30px 0;">
-                <h3>Vizyonumuz</h3>
-                <p>Kullanıcıların kendi dijital dünyalarını hiçbir kısıtlama olmadan inşa edebilecekleri bir platform sunmak.</p>
+        <div id="about-page" class="about-section">
+            <div style="max-width: 900px; margin: 0 auto;">
+                <h2 style="color: var(--primary);">About Rach OS Project</h2>
+                <p>Rach OS is a modern, independent operating system built from scratch in 2026. Inspired by the performance and modularity of tools like Hyprland, our OS offers an unparalleled level of customization and speed for advanced users.</p>
             </div>
         </div>
     </div>
 
     <script>
-        // --- 30 DİL HOŞGELDİN LİSTESİ ---
-        const languages = [
-            "WELCOME", "HOŞ GELDİNİZ", "WELCOME", "BIENVENUE", "WILLKOMMEN", "BIENVENIDOS", 
-            "BEM-VINDO", "BENVENUTO", "ДОБРО ПОЖАЛОВАТЬ", "WITAJ", "ÜDVÖZÖLJÜK", "VÄLKOMMEN", 
-            "VELKOMMEN", "TERVETULOA", "DOBRODOŠLI", "KALOS ILTHATE", "HOŞ GELDİNİZ", "SHAGATOM", 
-            "NAMASTE", "SWAGATAM", "MERHABA", "BIXÎR HATÎ", "TIKRILL", "SÜYÜNÜÜ", "MARHABA", 
-            "AHALAN", "ALOHA", "BONVENON", "RACH OS", "SYSTEM READY"
-        ];
-
+        // --- Çok Dilli LED Ekran ---
+        const words = [ "WELCOME", "HOŞ GELDİNİZ", "SHAGATOM", "NAMASTE", "SWAGATAM", "RACH OS", "SYSTEM READY" ];
         let langIndex = 0;
-        const textElement = document.getElementById("dynamic-text");
-
-        function rotateLanguages() {
-            textElement.style.opacity = "0";
+        setInterval(() => {
+            const el = document.getElementById("led-ekran");
+            el.style.opacity = "0";
             setTimeout(() => {
-                langIndex = (langIndex + 1) % languages.length;
-                textElement.innerText = languages[langIndex];
-                textElement.style.opacity = "1";
-            }, 400);
-        }
-        setInterval(rotateLanguages, 2000);
+                langIndex = (langIndex + 1) % words.length;
+                el.innerText = words[langIndex];
+                el.style.opacity = "1";
+            }, 300);
+        }, 3000);
 
-        // --- SİSTEMİ BAŞLAT ---
+        // --- Sisteme Giriş Animasyonu ---
         function startSystem() {
-            const boot = document.getElementById('boot-screen');
-            const main = document.getElementById('main-content');
+            const elGilis = document.getElementById('gilis-sayfasi');
+            const elPortal = document.getElementById('main-portal');
             
-            boot.style.transform = "translateY(-100%)";
+            // Giriş ekranını saniyeler içinde yukarı kaydır
+            elGilis.style.transition = "1s ease-in-out";
+            elGilis.style.transform = "translateY(-100vh)";
+            
             setTimeout(() => {
-                boot.style.display = "none";
-                main.style.display = "block";
+                elGilis.style.display = "none";
+                elPortal.style.display = "block";
                 document.body.style.overflow = "auto";
-            }, 800);
+            }, 1000);
         }
 
-        // --- SAYFA DEĞİŞTİRME ---
+        // --- Sayfa Geçişleri (Downloads/About) ---
         function showPage(pageId) {
             document.getElementById('downloads-page').style.display = (pageId === 'downloads') ? 'block' : 'none';
             document.getElementById('about-page').style.display = (pageId === 'about') ? 'block' : 'none';
